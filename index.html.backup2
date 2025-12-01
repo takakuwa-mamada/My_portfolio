@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio / Data Scientist</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Chart.js for Skill Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- JOURNEY SECTION OVERRIDE STYLES -->
+    <style>
+        /* Matrix Background Canvas */
+        #matrix-canvas {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 1 !important;
+            pointer-events: none !important;
+            opacity: 0.3 !important;
+        }
+        
+        /* Ensure content is above matrix */
+        .navbar,
+        section,
+        .hero,
+        .about,
+        .journey,
+        .skills,
+        .contact,
+        footer {
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        
+        /* Force pure black background everywhere */
+        body,
+        html {
+            background: #000000 !important;
+            background-color: #000000 !important;
+        }
+        
+        section,
+        .hero,
+        .about,
+        .journey,
+        .skills,
+        .contact,
+        .navbar {
+            background: #000000 !important;
+            background-color: #000000 !important;
+        }
+        
+        /* ABOUT ME section - Horizontal Layout */
+        .about {
+            background: #000000 !important;
+            padding: 6rem 0 !important;
+        }
+        
+        .about-grid {
+            display: grid !important;
+            grid-template-columns: 400px 1fr !important;
+            gap: 4rem !important;
+            max-width: 1400px !important;
+            margin: 0 auto !important;
+        }
+        
+        /* Left Column - Profile */
+        .about-visual {
+            background: rgba(0, 0, 0, 0.85) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            padding: 3rem !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2.5rem !important;
+            height: fit-content !important;
+        }
+        
+        .profile-frame {
+            background: rgba(0, 0, 0, 0.9) !important;
+            border: 2px solid rgba(255, 255, 255, 0.4) !important;
+            padding: 2.5rem !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+        
+        .profile-border,
+        .profile-scan {
+            display: none !important;
+        }
+        
+        .profile-image {
+            background: transparent !important;
+            border: none !important;
+            width: 120px !important;
+            height: 120px !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+        
+        .profile-icon i {
+            font-size: 5rem !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+        }
+        
+        .profile-data {
+            background: rgba(0, 0, 0, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            padding: 2rem !important;
+        }
+        
+        .data-row {
+            display: flex !important;
+            justify-content: space-between !important;
+            padding: 1rem 0 !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+            font-family: 'JetBrains Mono', monospace !important;
+            font-size: 0.95rem !important;
+        }
+        
+        .data-row:last-child {
+            border-bottom: none !important;
+        }
+        
+        .data-row span:first-child {
+            color: rgba(255, 255, 255, 0.7) !important;
+            font-weight: 600 !important;
+            letter-spacing: 1px !important;
+        }
+        
+        .data-row span:last-child {
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-weight: 500 !important;
+        }
+        
+        .status-active {
+            color: #00ff41 !important;
+            font-weight: 700 !important;
+        }
+        
+        /* Right Column - Content */
+        .about-content {
+            background: rgba(0, 0, 0, 0.85) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            padding: 4rem !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 3rem !important;
+        }
+        
+        .about-intro {
+            background: transparent !important;
+            border-left: 4px solid rgba(255, 255, 255, 0.9) !important;
+            padding-left: 2.5rem !important;
+        }
+        
+        .text-large {
+            font-size: 1.4rem !important;
+            line-height: 2 !important;
+            font-weight: 300 !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            letter-spacing: 0.3px !important;
+        }
+        
+        .about-details {
+            background: transparent !important;
+        }
+        
+        .about-details p {
+            color: rgba(255, 255, 255, 0.85) !important;
+            line-height: 2 !important;
+            margin-bottom: 1.5rem !important;
+            font-size: 1.05rem !important;
+        }
+        
+        .about-expertise {
+            background: transparent !important;
+            padding-top: 3rem !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+        
+        .expertise-title {
+            font-size: 1.2rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 3px !important;
+            margin-bottom: 2rem !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        .expertise-tags {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1.2rem !important;
+        }
+        
+        .tag-item {
+            background: rgba(0, 0, 0, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            padding: 1rem 1.5rem !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-size: 1rem !important;
+            font-family: 'JetBrains Mono', monospace !important;
+            text-align: center !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            font-weight: 500 !important;
+        }
+        
+        .tag-item:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.9) !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3) !important;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr !important;
+                gap: 3rem !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-content {
+                padding: 2.5rem !important;
+            }
+            
+            .expertise-tags {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        
+        .journey-timeline {
+            position: relative !important;
+            max-width: 900px !important;
+            margin: 6rem auto !important;
+            padding: 2rem !important;
+        }
+        
+        .journey-line {
+            display: none !important;
+        }
+        
+        .journey-item {
+            position: relative !important;
+            margin: 0 0 6rem 0 !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            width: 100% !important;
+        }
+        
+        .journey-year {
+            position: relative !important;
+            left: 0 !important;
+            transform: none !important;
+            top: 0 !important;
+            display: inline-block !important;
+            font-size: 1.3rem !important;
+            font-weight: 700 !important;
+            color: #ffffff !important;
+            background: transparent !important;
+            padding: 0 0 1rem 0 !important;
+            border: none !important;
+            border-bottom: 2px solid #ffffff !important;
+            margin-bottom: 1.5rem !important;
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        .journey-card {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-left: 4px solid #ffffff !important;
+            padding: 2.5rem !important;
+            margin: 0 !important;
+            width: 100% !important;
+        }
+        
+        .journey-item:nth-child(even) .journey-card,
+        .journey-item:nth-child(odd) .journey-card {
+            margin: 0 !important;
+        }
+        
+        .journey-card::before {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Background Effect -->
+    <canvas id="matrix-canvas"></canvas>
+    
+    <!-- カスタムカーソル -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- スクロール進捗バー -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- グリッドオーバーレイ -->
+    <div class="grid-overlay"></div>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">&lt;/&gt;</span>
+                <span class="logo-name">PORTFOLIO</span>
+            </div>
+            <div class="nav-menu-wrapper">
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link"><span class="nav-number">01</span>HOME</a></li>
+                    <li><a href="#about" class="nav-link"><span class="nav-number">02</span>ABOUT</a></li>
+                    <li><a href="#journey" class="nav-link"><span class="nav-number">03</span>JOURNEY</a></li>
+                    <li><a href="#experience" class="nav-link"><span class="nav-number">04</span>EXPERIENCE</a></li>
+                    <li><a href="#ml-demo" class="nav-link"><span class="nav-number">05</span>GITHUB</a></li>
+                    <li><a href="#projects" class="nav-link"><span class="nav-number">06</span>WORKS</a></li>
+                    <li><a href="#contact" class="nav-link"><span class="nav-number">07</span>CONTACT</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ヒーローセクション -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-grid"></div>
+            <canvas id="particle-canvas"></canvas>
+        </div>
+        <div class="hero-content">
+            <div class="hero-label">
+                <span class="glitch-line"></span>
+                <span>PORTFOLIO 2025</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line" data-text="DATA">DATA</span>
+                <span class="title-line" data-text="SCIENTIST">SCIENTIST</span>
+            </h1>
+            <div class="hero-subtitle">
+                <p class="typewriter">Transforming Data into Insights</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="100">0</span>
+                    <span class="stat-label">Projects</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="500">0</span>
+                    <span class="stat-label">Hours</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="15">0</span>
+                    <span class="stat-label">Skills</span>
+                </div>
+            </div>
+            <div class="hero-cta">
+                <a href="#projects" class="btn-cyber">
+                    <span class="btn-text">VIEW WORKS</span>
+                    <span class="btn-glitch"></span>
+                </a>
+                <a href="#contact" class="btn-outline">
+                    <span>GET IN TOUCH</span>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>SCROLL</span>
+        </div>
+    </section>
+
+    <!-- 自己紹介セクション -->
+    <section id="about" class="about">
+        <div class="container-fluid">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title" data-scroll>ABOUT ME</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-visual">
+                    <div class="profile-frame">
+                        <div class="profile-border"></div>
+                        <div class="profile-image">
+                            <div class="profile-icon">
+                                <i class="fas fa-user-astronaut"></i>
+                            </div>
+                        </div>
+                        <div class="profile-scan"></div>
+                    </div>
+                    <div class="profile-data">
+                        <div class="data-row"><span>ROLE:</span><span>DATA SCIENTIST</span></div>
+                        <div class="data-row"><span>STATUS:</span><span class="status-active">AVAILABLE</span></div>
+                        <div class="data-row"><span>LOCATION:</span><span>JAPAN</span></div>
+                    </div>
+                </div>
+                <div class="about-content">
+                    <div class="about-intro" data-scroll>
+                        <p class="text-large">
+                            データサイエンスとAIの力でビジネス課題を解決することに情熱を注いでいます。
+                        </p>
+                    </div>
+                    <div class="about-details" data-scroll>
+                        <p>
+                            GCI2025 Summerプログラムを通じて、機械学習、統計分析、Pythonプログラミングなど
+                            幅広いスキルを習得。実践的なプロジェクトを通じて、データから意味のある洞察を
+                            引き出す経験を積み重ねています。
+                        </p>
+                        <p>
+                            「ゼロから作るDeep Learning」の実装経験を含め、理論と実践の両面から
+                            深層学習について学習。継続的な成長と新しい技術への挑戦を大切にしています。
+                        </p>
+                    </div>
+                    <div class="about-expertise" data-scroll>
+                        <h3 class="expertise-title">EXPERTISE</h3>
+                        <div class="expertise-tags">
+                            <span class="tag-item">Machine Learning</span>
+                            <span class="tag-item">Data Analysis</span>
+                            <span class="tag-item">Deep Learning</span>
+                            <span class="tag-item">Python</span>
+                            <span class="tag-item">Statistics</span>
+                            <span class="tag-item">SQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学習の旅セクション (JOURNEY) -->
+    <section id="journey" class="journey">
+        <div class="container-fluid">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title" data-scroll>MY JOURNEY</h2>
+                <p class="section-subtitle">産業技術高専 → 東京都立大学 → 大学院への道のり</p>
+            </div>
+            
+            <div class="journey-timeline" data-scroll>
+                <div class="journey-line"></div>
+                
+                <!-- 2019-2024: 産業技術高専 -->
+                <div class="journey-item" data-scroll>
+                    <div class="journey-year">2019-2024</div>
+                    <div class="journey-card">
+                        <div class="journey-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="journey-title">産業技術高等専門学校</h3>
+                        <p class="journey-subtitle">ものづくり工学科</p>
+                        <div class="journey-description">
+                            <p>5年間の高専教育で、工学の基礎から実践的なものづくりまでを学習。プログラミングとデータサイエンスへの興味を深める。</p>
+                            <ul class="journey-achievements">
+                                <li><i class="fas fa-check"></i> 工学基礎の習得</li>
+                                <li><i class="fas fa-check"></i> プログラミング基礎</li>
+                                <li><i class="fas fa-check"></i> 実践的プロジェクト</li>
+                            </ul>
+                        </div>
+                        <div class="journey-tags">
+                            <span>Engineering</span>
+                            <span>Manufacturing</span>
+                            <span>Programming</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2024-2026: 東京都立大学 -->
+                <div class="journey-item" data-scroll>
+                    <div class="journey-year">2024-2026</div>
+                    <div class="journey-card active">
+                        <div class="journey-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3 class="journey-title">東京都立大学</h3>
+                        <p class="journey-subtitle">システムデザイン学部（編入）</p>
+                        <div class="journey-description">
+                            <p>データサイエンス・機械学習を本格的に学習開始。Pythonを駆使した分析スキルとAI技術を習得中。</p>
+                            <ul class="journey-achievements">
+                                <li><i class="fas fa-check"></i> 機械学習・統計学の深化</li>
+                                <li><i class="fas fa-check"></i> GCI 2025 Summer参加</li>
+                                <li><i class="fas fa-check"></i> Kaggleコンペ挑戦</li>
+                            </ul>
+                        </div>
+                        <div class="journey-tags">
+                            <span>Data Science</span>
+                            <span>Machine Learning</span>
+                            <span>Python</span>
+                            <span>Statistics</span>
+                        </div>
+                        <div class="journey-badge">現在</div>
+                    </div>
+                </div>
+                
+                <!-- 2026-: 大学院 -->
+                <div class="journey-item" data-scroll>
+                    <div class="journey-year">2026-</div>
+                    <div class="journey-card future">
+                        <div class="journey-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3 class="journey-title">東京都立大学大学院</h3>
+                        <p class="journey-subtitle">研究への挑戦</p>
+                        <div class="journey-description">
+                            <p>より高度な研究活動へ。AIと機械学習の最先端技術を追求し、実社会への応用を目指す。</p>
+                            <ul class="journey-achievements">
+                                <li><i class="fas fa-rocket"></i> 先端AI研究</li>
+                                <li><i class="fas fa-rocket"></i> 論文執筆・学会発表</li>
+                                <li><i class="fas fa-rocket"></i> 実社会への応用</li>
+                            </ul>
+                        </div>
+                        <div class="journey-tags">
+                            <span>Research</span>
+                            <span>Advanced AI</span>
+                            <span>Innovation</span>
+                        </div>
+                        <div class="journey-badge future-badge">未来</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- スキルレーダーチャート -->
+            <div class="skills-visualization" data-scroll>
+                <h3 class="subsection-title">SKILL RADAR</h3>
+                <div class="chart-container">
+                    <canvas id="skillRadarChart" width="600" height="500"></canvas>
+                </div>
+                <div class="skill-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(255, 255, 255, 0.8);"></div>
+                        <span>現在のスキルレベル</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 経験・スキルセクション -->
+    <section id="experience" class="experience">
+        <div class="container-fluid">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title" data-scroll>EXPERIENCE & SKILLS</h2>
+            </div>
+            
+            <div class="experience-timeline" data-scroll>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2025</span>
+                        <h3>GCI 2025 Summer Program</h3>
+                        <p>機械学習、統計、Pythonを中心とした集中プログラム</p>
+                        <div class="timeline-tags">
+                            <span>Machine Learning</span>
+                            <span>Statistics</span>
+                            <span>Python</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2025</span>
+                        <h3>Deep Learning Studies</h3>
+                        <p>「ゼロから作るDeep Learning」実装プロジェクト</p>
+                        <div class="timeline-tags">
+                            <span>Neural Networks</span>
+                            <span>NumPy</span>
+                            <span>CNN</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024-2025</span>
+                        <h3>Data Science Projects</h3>
+                        <p>Kaggleコンペティション、データ分析プロジェクト</p>
+                        <div class="timeline-tags">
+                            <span>Pandas</span>
+                            <span>Matplotlib</span>
+                            <span>SQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-matrix" data-scroll>
+                <h3 class="matrix-title">TECHNICAL SKILLS</h3>
+                <div class="skills-grid">
+                    <div class="skill-block">
+                        <div class="skill-icon"><i class="fab fa-python"></i></div>
+                        <h4>Python</h4>
+                        <div class="skill-bar-wrapper">
+                            <div class="skill-bar" data-progress="85">
+                                <span class="skill-progress"></span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                        </div>
+                        <p>Pandas, NumPy, Scikit-learn</p>
+                    </div>
+                    <div class="skill-block">
+                        <div class="skill-icon"><i class="fas fa-brain"></i></div>
+                        <h4>Machine Learning</h4>
+                        <div class="skill-bar-wrapper">
+                            <div class="skill-bar" data-progress="80">
+                                <span class="skill-progress"></span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                        </div>
+                        <p>Supervised & Unsupervised</p>
+                    </div>
+                    <div class="skill-block">
+                        <div class="skill-icon"><i class="fas fa-database"></i></div>
+                        <h4>Data Analysis</h4>
+                        <div class="skill-bar-wrapper">
+                            <div class="skill-bar" data-progress="85">
+                                <span class="skill-progress"></span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                        </div>
+                        <p>SQL, Data Visualization</p>
+                    </div>
+                    <div class="skill-block">
+                        <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+                        <h4>Statistics</h4>
+                        <div class="skill-bar-wrapper">
+                            <div class="skill-bar" data-progress="75">
+                                <span class="skill-progress"></span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                        </div>
+                        <p>Probability, Hypothesis Testing</p>
+                    </div>
+                    <div class="skill-block">
+                        <div class="skill-icon"><i class="fas fa-project-diagram"></i></div>
+                        <h4>Deep Learning</h4>
+                        <div class="skill-bar-wrapper">
+                            <div class="skill-bar" data-progress="70">
+                                <span class="skill-progress"></span>
+                                <span class="skill-percent">70%</span>
+                            </div>
+                        </div>
+                        <p>Neural Networks, CNN, RNN</p>
+                    </div>
+                    <div class="skill-block">
+                        <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                        <h4>Git & GitHub</h4>
+                        <div class="skill-bar-wrapper">
+                            <div class="skill-bar" data-progress="80">
+                                <span class="skill-progress"></span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                        </div>
+                        <p>Version Control, Collaboration</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ML/AIライブデモセクション -->
+    <section id="ml-demo" class="ml-demo">
+        <div class="container-fluid">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title" data-scroll>GITHUB REPOSITORIES</h2>
+                <p class="section-subtitle">最新のプロジェクトをリアルタイムで表示</p>
+            </div>
+            
+            <div class="demo-container" data-scroll>
+                <!-- GitHub リポジトリ表示 -->
+                <div class="demo-card github-card full-width">
+                    <div class="demo-header">
+                        <div class="demo-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <h3>GitHub リポジトリ</h3>
+                        <p>最新のプロジェクトを自動取得</p>
+                    </div>
+                    
+                    <div class="demo-body">
+                        <div class="github-input-group">
+                            <input 
+                                type="text" 
+                                id="githubUsername" 
+                                placeholder="GitHubユーザー名を入力"
+                                value="takakuwa-mamada"
+                                class="github-input"
+                            >
+                            <button class="btn-cyber" id="fetchRepos">
+                                <i class="fas fa-search"></i> 取得
+                            </button>
+                        </div>
+                        
+                        <div class="github-loading" id="githubLoading" style="display: none;">
+                            <div class="loading-spinner"></div>
+                            <p>リポジトリを取得中...</p>
+                        </div>
+                        
+                        <div class="github-repos" id="githubRepos"></div>
+                    </div>
+                    
+                    <div class="demo-footer">
+                        <div class="demo-tech">
+                            <span><i class="fab fa-github"></i> GitHub API v3</span>
+                            <span><i class="fas fa-sync"></i> Real-time Data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-note" data-scroll>
+                <i class="fas fa-info-circle"></i>
+                <p>GitHub APIを使用してリアルタイムでリポジトリ情報を取得・表示しています。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- プロジェクトセクション -->
+    <section id="projects" class="projects">
+        <div class="container-fluid">
+            <div class="section-header">
+                <span class="section-number">06</span>
+                <h2 class="section-title" data-scroll>SELECTED WORKS</h2>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card" data-scroll>
+                    <div class="project-number">01</div>
+                    <div class="project-visual">
+                        <div class="project-icon">
+                            <i class="fas fa-ship"></i>
+                        </div>
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Titanic Survival Prediction</h3>
+                        <p class="project-desc">
+                            機械学習アルゴリズムを用いてタイタニック号の乗客生存率を予測。
+                            特徴量エンジニアリングと複数モデルの比較検証を実施。
+                        </p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>Scikit-learn</span>
+                            <span>Pandas</span>
+                            <span>Kaggle</span>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="metric"><span>Accuracy:</span> 82%</div>
+                            <div class="metric"><span>Models:</span> 5</div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-scroll>
+                    <div class="project-number">02</div>
+                    <div class="project-visual">
+                        <div class="project-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Deep Learning from Scratch</h3>
+                        <p class="project-desc">
+                            「ゼロから作るDeep Learning」を基に、ニューラルネットワークを
+                            スクラッチで実装。CNNによる画像認識まで到達。
+                        </p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>NumPy</span>
+                            <span>CNN</span>
+                            <span>MNIST</span>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="metric"><span>Accuracy:</span> 98%</div>
+                            <div class="metric"><span>Layers:</span> 7</div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Documentation</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-scroll>
+                    <div class="project-number">03</div>
+                    <div class="project-visual">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Data Visualization Dashboard</h3>
+                        <p class="project-desc">
+                            複雑なデータセットをインタラクティブに可視化するダッシュボード。
+                            Matplotlibを使用した多様なグラフ表現を実装。
+                        </p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>Matplotlib</span>
+                            <span>Seaborn</span>
+                            <span>Plotly</span>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="metric"><span>Charts:</span> 15+</div>
+                            <div class="metric"><span>Datasets:</span> 3</div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-scroll>
+                    <div class="project-number">04</div>
+                    <div class="project-visual">
+                        <div class="project-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="project-overlay"></div>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Time Series Analysis</h3>
+                        <p class="project-desc">
+                            時系列データの分析と予測モデルの構築。ARIMAモデルと
+                            LSTMを用いた複数アプローチの比較検証。
+                        </p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>LSTM</span>
+                            <span>ARIMA</span>
+                            <span>TensorFlow</span>
+                        </div>
+                        <div class="project-metrics">
+                            <div class="metric"><span>RMSE:</span> 0.12</div>
+                            <div class="metric"><span>Days:</span> 365</div>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Results</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせセクション -->
+    <section id="contact" class="contact">
+        <div class="container-fluid">
+            <div class="section-header">
+                <span class="section-number">07</span>
+                <h2 class="section-title" data-scroll>GET IN TOUCH</h2>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info" data-scroll>
+                    <div class="contact-intro">
+                        <h3>Let's Work Together</h3>
+                        <p>
+                            新しいプロジェクトやコラボレーションの機会を常に探しています。
+                            お気軽にご連絡ください。
+                        </p>
+                    </div>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="method-info">
+                                <span class="method-label">EMAIL</span>
+                                <a href="mailto:your.email@example.com">your.email@example.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon"><i class="fab fa-github"></i></div>
+                            <div class="method-info">
+                                <span class="method-label">GITHUB</span>
+                                <a href="https://github.com/takakuwa-mamada" target="_blank">@takakuwa-mamada</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon"><i class="fab fa-linkedin"></i></div>
+                            <div class="method-info">
+                                <span class="method-label">LINKEDIN</span>
+                                <a href="#" target="_blank">Your LinkedIn</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="method-info">
+                                <span class="method-label">LOCATION</span>
+                                <span>Japan</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/takakuwa-mamada" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" target="_blank" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="mailto:your.email@example.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form-wrapper" data-scroll>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">NAME</label>
+                            <input type="text" id="name" name="name" required>
+                            <span class="form-line"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">EMAIL</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="form-line"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">SUBJECT</label>
+                            <input type="text" id="subject" name="subject" required>
+                            <span class="form-line"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">MESSAGE</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                            <span class="form-line"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn-cyber">
+                            <span class="btn-text">SEND MESSAGE</span>
+                            <span class="btn-glitch"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">&lt;/&gt;</div>
+                    <p>Data Scientist Portfolio</p>
+                </div>
+                
+                <div class="footer-nav">
+                    <h4>NAVIGATION</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#experience">Experience</a></li>
+                        <li><a href="#projects">Works</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-social">
+                    <h4>CONNECT</h4>
+                    <div class="footer-social-links">
+                        <a href="https://github.com/takakuwa-mamada" target="_blank">GitHub</a>
+                        <a href="#" target="_blank">LinkedIn</a>
+                        <a href="#" target="_blank">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-line"></div>
+                <p>&copy; 2025 Portfolio. All rights reserved.</p>
+                <p class="footer-made">Designed & Built with <span class="heart">❤</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+    <!-- Matrix Background Effect -->
+    <script>
+        // Canvas設定
+        const matrixCanvas = document.getElementById('matrix-canvas');
+        const matrixCtx = matrixCanvas.getContext('2d');
+
+        // キャンバスサイズをウィンドウに合わせる
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+
+        // 文字セット (0と1のみ)
+        const matrixChars = '01';
+        const matrixCharArray = matrixChars.split('');
+
+        // 列の設定
+        const matrixFontSize = 16;
+        const matrixColumns = Math.floor(matrixCanvas.width / matrixFontSize);
+        const matrixDrops = Array(matrixColumns).fill(1);
+
+        // 緑色、少し遅めの速度
+        const matrixSpeed = 50; // ミリ秒
+
+        // Matrix描画関数 (ランダムな降り方)
+        function drawMatrix() {
+            // 半透明の黒で画面を覆う (トレイルエフェクト)
+            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+            // 文字スタイル (濃い緑色)
+            matrixCtx.fillStyle = '#00ff41';
+            matrixCtx.font = `${matrixFontSize}px monospace`;
+            matrixCtx.shadowBlur = 10;
+            matrixCtx.shadowColor = '#00ff41';
+
+            // 各列に文字を描画 (ランダムな位置と速度)
+            for (let i = 0; i < matrixDrops.length; i++) {
+                // ランダムに描画するか決定 (より不規則に)
+                if (Math.random() > 0.3) {
+                    // 0か1をランダムに選択
+                    const text = matrixCharArray[Math.floor(Math.random() * matrixCharArray.length)];
+                    
+                    // ランダムなX位置 (列から少しずらす)
+                    const xOffset = (Math.random() - 0.5) * 5;
+                    const x = i * matrixFontSize + xOffset;
+                    const y = matrixDrops[i] * matrixFontSize;
+
+                    // ランダムな透明度で変化を付ける
+                    const alpha = 0.5 + Math.random() * 0.5;
+                    matrixCtx.globalAlpha = alpha;
+
+                    // 文字を描画
+                    matrixCtx.fillText(text, x, y);
+                    
+                    // 透明度をリセット
+                    matrixCtx.globalAlpha = 1;
+                }
+
+                // ランダムに列をリセット
+                if (matrixDrops[i] * matrixFontSize > matrixCanvas.height && Math.random() > 0.95) {
+                    matrixDrops[i] = 0;
+                }
+
+                // ランダムな速度で次の位置へ (0.5~1.5倍速)
+                matrixDrops[i] += 0.5 + Math.random();
+            }
+        }
+
+        // アニメーションループ
+        setInterval(drawMatrix, matrixSpeed);
+
+        // ウィンドウリサイズ対応
+        window.addEventListener('resize', () => {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+            matrixDrops.length = Math.floor(matrixCanvas.width / matrixFontSize);
+            matrixDrops.fill(1);
+        });
+    </script>
+    
+    <!-- Journey Items Auto Display -->
+    <script>
+        // Journey items are now always visible, no need to force styles
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('.journey-item');
+            console.log('Journey items loaded:', items.length);
+            items.forEach((item, i) => {
+                item.classList.add('visible');
+                console.log('Journey item', i + 1, 'ready');
+            });
+        });
+    </script>
+    
+    <!-- Radar Chart Debug Script -->
+    <script>
+        // レーダーチャートを直接初期化
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('=== Direct Radar Chart Initialization ===');
+                const canvas = document.getElementById('skillRadarChart');
+                
+                if (!canvas) {
+                    console.error('❌ Canvas not found!');
+                    return;
+                }
+                
+                if (typeof Chart === 'undefined') {
+                    console.error('❌ Chart.js not loaded!');
+                    return;
+                }
+                
+                console.log('✓ Canvas found:', canvas);
+                console.log('✓ Chart.js loaded');
+                console.log('Canvas dimensions:', canvas.width, 'x', canvas.height);
+                
+                try {
+                    const ctx = canvas.getContext('2d');
+                    
+                    const radarChart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Python', '機械学習', '統計学', 'データ可視化', 'SQL', 'Deep Learning', 'Pandas/NumPy'],
+                            datasets: [{
+                                label: 'スキルレベル',
+                                data: [90, 85, 80, 85, 75, 80, 90],
+                                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                                borderColor: 'rgba(255, 255, 255, 0.95)',
+                                borderWidth: 3,
+                                pointBackgroundColor: 'rgba(255, 255, 255, 1)',
+                                pointBorderColor: 'rgba(0, 0, 0, 0.8)',
+                                pointBorderWidth: 2,
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: 'rgba(255, 255, 255, 0.9)',
+                                pointRadius: 6,
+                                pointHoverRadius: 9
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    angleLines: {
+                                        color: 'rgba(255, 255, 255, 0.3)',
+                                        lineWidth: 1
+                                    },
+                                    grid: {
+                                        color: 'rgba(255, 255, 255, 0.2)',
+                                        lineWidth: 1
+                                    },
+                                    pointLabels: {
+                                        color: 'rgba(255, 255, 255, 0.9)',
+                                        font: {
+                                            size: 14,
+                                            family: 'Space Grotesk',
+                                            weight: 'bold'
+                                        }
+                                    },
+                                    ticks: {
+                                        color: 'rgba(255, 255, 255, 0.6)',
+                                        backdropColor: 'rgba(0, 0, 0, 0.5)',
+                                        stepSize: 20,
+                                        showLabelBackdrop: true
+                                    },
+                                    min: 0,
+                                    max: 100,
+                                    beginAtZero: true
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#fff',
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                                    borderWidth: 1
+                                }
+                            },
+                            animation: {
+                                duration: 1500,
+                                easing: 'easeInOutQuart'
+                            }
+                        }
+                    });
+                    
+                    console.log('✅ Radar chart created successfully!', radarChart);
+                } catch (error) {
+                    console.error('❌ Error creating chart:', error);
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
